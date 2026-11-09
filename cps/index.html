@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%; width: 100%;">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script>
+const MAX_TIME = 60;
+
+document.addEventListener("DOMContentLoaded", () => {
+  let time = 0;
+  let elapsed = 0;
+  let c = 0;
+  let cps = 0;
+  let running = false;
+
+  let data = document.getElementById("data");
+
+  let interval;
+
+  document.body.addEventListener("click", () => {
+    c++;
+
+    if (!running) {
+      running = true;
+      time = MAX_TIME;
+      c = 0;
+      cps = 0;
+
+      interval = setInterval(() => {
+        time -= 0.1;
+        elapsed+=0.1;
+
+        if (time == 0) {
+          clearInterval(interval);
+          setTimeout(() => {
+            running = false;
+          }, 1000);
+        }
+      }, 100);
+    }
+
+    if (elapsed != 0) {
+      cps = c / elapsed;
+    }
+
+    data.innerText = `${time.toFixed(1)}s | ${cps.toFixed(2)} c/s`
+
+  });
+
+});
+
+  </script>
+</head>
+<body style="height: 100%; width: 100%;user-select: none;font-family: Verdana, Geneva, Tahoma, sans-serif; display: flex; justify-content: center; align-items: center;">
+  <span id="data" style="font-size: 7rem;">60s | 0 c/s</span>
+</body>
+</html>
