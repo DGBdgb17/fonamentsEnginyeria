@@ -14,6 +14,7 @@
       let c = 0;
       let cps = 0;
       let running = false;
+      let stop = false;
 
       let data = document.getElementById("data");
 
@@ -27,10 +28,11 @@
       }
 
       document.body.addEventListener("click", () => {
+        if(stop) return;
+
         c++;
 
         if (!running) {
-
           running = true;
           time = MAX_TIME;
           c = 0;
@@ -43,9 +45,11 @@
 
             if (time <= 0) {
               time = 0;
+              stop = true;
               clearInterval(interval);
               document.body.style.backgroundColor = "#CC6666";
               setTimeout(() => {
+                stop = false;
                 running = false;
                 document.body.style.backgroundColor = "#FFFFFF";
               }, 1000);
