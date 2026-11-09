@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <script>
-    const MAX_TIME = 60;
+    const MAX_TIME = 6;
 
     document.addEventListener("DOMContentLoaded", () => {
       let time = 0;
@@ -44,8 +44,10 @@
             if (time <= 0) {
               time = 0;
               clearInterval(interval);
+              document.body.style.backgroundColor = "#CC6666";
               setTimeout(() => {
                 running = false;
+                document.body.style.backgroundColor = "#FFFFFF";
               }, 1000);
             }
 
