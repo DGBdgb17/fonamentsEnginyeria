@@ -1,58 +1,71 @@
 <!DOCTYPE html>
-<html lang="en" style="height: 100%; width: 100%;">
+<html lang="en" style="height: 100%; width: 100%;margin: 0;padding: 0;">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <script>
-const MAX_TIME = 60;
+    const MAX_TIME = 60;
 
-document.addEventListener("DOMContentLoaded", () => {
-  let time = 0;
-  let elapsed = 0;
-  let c = 0;
-  let cps = 0;
-  let running = false;
+    document.addEventListener("DOMContentLoaded", () => {
+      let time = 0;
+      let elapsed = 0;
+      let c = 0;
+      let cps = 0;
+      let running = false;
 
-  let data = document.getElementById("data");
+      let data = document.getElementById("data");
 
-  let interval;
+      let interval;
 
-  document.body.addEventListener("click", () => {
-    c++;
-
-    if (!running) {
-      running = true;
-      time = MAX_TIME;
-      c = 0;
-      cps = 0;
-
-      interval = setInterval(() => {
-        time -= 0.1;
-        elapsed+=0.1;
-
-        if (time == 0) {
-          clearInterval(interval);
-          setTimeout(() => {
-            running = false;
-          }, 1000);
+      function updateText() {
+        if (elapsed != 0) {
+          cps = c / elapsed;
         }
-      }, 100);
-    }
+        data.innerText = `${time.toFixed(1)}s\n${c}c\n${cps.toFixed(2)} c/s`
+      }
 
-    if (elapsed != 0) {
-      cps = c / elapsed;
-    }
+      document.body.addEventListener("click", () => {
+        c++;
 
-    data.innerText = `${time.toFixed(1)}s | ${cps.toFixed(2)} c/s`
+        if (!running) {
 
-  });
+          running = true;
+          time = MAX_TIME;
+          c = 0;
+          cps = 0;
 
-});
+          interval = setInterval(() => {
+            if (time <= 0) return;
+            time -= 0.1;
+            elapsed += 0.1;
+
+            if (time <= 0) {
+              time = 0;
+              clearInterval(interval);
+              setTimeout(() => {
+                running = false;
+              }, 1000);
+            }
+
+            updateText();
+
+          }, 100);
+        }
+
+        updateText();
+
+      });
+
+    });
 
   </script>
 </head>
-<body style="height: 100%; width: 100%;user-select: none;font-family: Verdana, Geneva, Tahoma, sans-serif; display: flex; justify-content: center; align-items: center;">
-  <span id="data" style="font-size: 7rem;">60s | 0 c/s</span>
+
+<body
+  style="margin: 0;padding: 0;height: 100%; width: 100%;user-select: none;font-family: Verdana, Geneva, Tahoma, sans-serif; display: flex; justify-content: center; align-items: center;">
+  <span id="data" style="font-size: 7rem; width: 50vw;">Fes clic per començar</span>
 </body>
+
 </html>
