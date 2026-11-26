@@ -13,7 +13,7 @@ def aproximacio_monte_carlo(radi, punts_maxims, DECIMALS=1000):
   for i in range(punts_maxims):
     punto = ((random.randint(min_punto, max_punto))/DECIMALS,(random.randint(min_punto, max_punto))/DECIMALS)
 
-    if (punto[0]**2 + punto[1]**2) < radi:
+    if (punto[0]**2 + punto[1]**2) < radi**2:
       dentro += 1
       punts.append((punto, True))
     else:
